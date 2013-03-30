@@ -2,7 +2,7 @@ package gtf;
 
 import haxe.macro.Expr;
 
-class Assert {
+class Test {
 
 	public dynamic function anyException() return 'any exception';
 	public dynamic function noException() return 'no exception raised';
@@ -11,6 +11,7 @@ class Assert {
 	public dynamic function passed( expected:Dynamic, ?pos:haxe.PosInfos ) {}
 	public dynamic function failed( expected:Dynamic, got:Dynamic, ?pos:haxe.PosInfos ) {}
 	public dynamic function error( error:Dynamic, ?pos:haxe.PosInfos ) {}
+	public dynamic function took( seconds:Float, ?pos:haxe.PosInfos ) {}
 
 	// equality comparisson, may be overriden
 	// default is ==, and uses values for basic types Bool, Int, String and references for everything else
@@ -81,6 +82,25 @@ class Assert {
 				failed( anyException(), noException() );
 			else
 				passed( anyException() );
+		};
+	}
+	public macro function time<A>( ethis:Expr, x:ExprOf<A> ) {
+		return macro {
+			var t = 0.;
+			var k = 0;
+			while ( t < .1 ) {
+				k = k!=0? k*2: 1;
+				t = 0.;
+				for ( i in 0...2 ) {
+					var t1 = haxe.Timer.stamp();
+					for ( j in 0...k )
+						$x;
+					var t2 = haxe.Timer.stamp();
+					t += t2 - t1;
+				}
+			}
+			// trace( k*2 );
+			took( t/k/2 );
 		};
 	}
 

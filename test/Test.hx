@@ -1,10 +1,8 @@
-import gtf.Assert;
-
 class Test {
 	var tests:Array<Dynamic>;
 
 	function new() {
-		tests = [ new TestAssertions() ];
+		tests = [ new TestAssertions(), new TestTiming() ];
 	}
 
 	function runTests() {

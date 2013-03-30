@@ -2,5 +2,4 @@
 -cp src
 -cp test
 -neko bin/test.n
-#-cmd neko bin/test.n
--D dump=pretty
+#-D dump=pretty
