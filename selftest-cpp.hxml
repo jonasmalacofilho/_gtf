@@ -1,0 +1,14 @@
+# -main Test.hx
+# -cp src
+# -cp test
+# -cpp bin/cpp
+# #-D dump=pretty
+
+# --next
+
+-main Test.hx
+-cp src
+-cp test
+-cpp bin/cpp64
+-D HXCPP_M64
+#-D dump=pretty
