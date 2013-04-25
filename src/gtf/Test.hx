@@ -88,7 +88,7 @@ class Test {
 		return macro {
 			var t = 0.;
 			var k = 0;
-			while ( t < .1 ) {
+			while ( t < .1 && k <= 1000000 ) {
 				k = k!=0? k*2: 1;
 				t = 0.;
 				for ( i in 0...2 ) {
