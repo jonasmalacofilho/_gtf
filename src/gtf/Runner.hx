@@ -30,15 +30,15 @@ class Runner {
 			suite.failed = function ( e, g, ?p ) {
 				ares.assertions++;
 				ares.failed.push( { expected:e, got:g, pos:p } );
-				// trace( '${p.className}:${p.methodName}:${p.lineNumber}  FAILED $e, got $g', p );
+				// trace( '${p.className}:${p.methodName}:${p.lineNumber}  FAILED $e, got $g' );
 			}
 			suite.error = function ( e, ?p ) {
 				ares.assertions++;
 				ares.errors.push( { error:e, pos:p } );
-				// trace( '${p.className}:${p.methodName}:${p.lineNumber}  ERROR $e', p );
+				// trace( '${p.className}:${p.methodName}:${p.lineNumber}  ERROR $e' );
 			}
 			suite.took = function ( s, ?p ) {
-				trace( '${p.className}:${p.methodName}:${p.lineNumber}  took ${1e3*s} ms', p );
+				trace( '${p.className}:${p.methodName}:${p.lineNumber}  took ${1e3*s} ms' );
 			}
 
 			// metadata and fields
