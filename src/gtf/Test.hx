@@ -16,7 +16,8 @@ class Test {
 
 	// equality comparisson, may be overriden
 	// default is ==, and uses values for basic types Bool, Int, String and references for everything else
-	public function gtf_equals<A>( a:A, b:A )
+	// if not inlined causes Math.POSITIVE_INFINITY!=Math.POSITIVE_INFINITY on Hxcpp and Linux
+	public inline function gtf_equals<A>( a:A, b:A )
 		return a==b;
 
 	public macro function assertEquals<A>( ethis:Expr, expected:ExprOf<A>, x:ExprOf<A> ) {
@@ -25,6 +26,17 @@ class Test {
 			var gtf__e = $expected;
 			var gtf__x = $x;
 			if ( gtf_equals( gtf__e, gtf__x ) )
+				gtf_passed( gtf__e, $expr );
+			else
+				gtf_failed( gtf__e, gtf__x, $expr );
+		}, expr );
+	}
+	public macro function assertDifferent<A>( ethis:Expr, expected:ExprOf<A>, x:ExprOf<A> ) {
+		var expr = haxe.macro.Context.makeExpr( haxe.macro.ExprTools.toString( x ), x.pos );
+		return exec( macro {
+			var gtf__e = $expected;
+			var gtf__x = $x;
+			if ( !gtf_equals( gtf__e, gtf__x ) )
 				gtf_passed( gtf__e, $expr );
 			else
 				gtf_failed( gtf__e, gtf__x, $expr );
