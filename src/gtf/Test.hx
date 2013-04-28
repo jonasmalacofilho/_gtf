@@ -8,11 +8,11 @@ class Test {
 	public dynamic function gtf_noException() return 'no exception raised';
 
 	// the test runner must replace these functions in other to get the results
-	public dynamic function gtf_passed( expected:Dynamic, ?pos:haxe.PosInfos ) {}
-	public dynamic function gtf_failed( expected:Dynamic, got:Dynamic, ?pos:haxe.PosInfos ) {}
-	public dynamic function gtf_error( error:Dynamic, ?pos:haxe.PosInfos ) {}
-	public dynamic function gtf_took( seconds:Float, ?pos:haxe.PosInfos ) {}
-	public dynamic function gtf_took_error( error:Dynamic, ?pos:haxe.PosInfos ) {}
+	public dynamic function gtf_passed( expected:Dynamic, expr:String, ?pos:haxe.PosInfos ) {}
+	public dynamic function gtf_failed( expected:Dynamic, got:Dynamic, expr:String, ?pos:haxe.PosInfos ) {}
+	public dynamic function gtf_error( error:Dynamic, expr:String, ?pos:haxe.PosInfos ) {}
+	public dynamic function gtf_took( seconds:Float, expr:String, ?pos:haxe.PosInfos ) {}
+	public dynamic function gtf_took_error( error:Dynamic, expr:String, ?pos:haxe.PosInfos ) {}
 
 	// equality comparisson, may be overriden
 	// default is ==, and uses values for basic types Bool, Int, String and references for everything else
@@ -20,46 +20,51 @@ class Test {
 		return a==b;
 
 	public macro function assertEquals<A>( ethis:Expr, expected:ExprOf<A>, x:ExprOf<A> ) {
+		var expr = haxe.macro.Context.makeExpr( haxe.macro.ExprTools.toString( x ), x.pos );
 		return exec( macro {
 			var gtf__e = $expected;
 			var gtf__x = $x;
 			if ( gtf_equals( gtf__e, gtf__x ) )
-				gtf_passed( gtf__e );
+				gtf_passed( gtf__e, $expr );
 			else
-				gtf_failed( gtf__e, gtf__x );
-		} );
+				gtf_failed( gtf__e, gtf__x, $expr );
+		}, expr );
 	}
 	public macro function assertAcceptable( ethis:Expr, expected:ExprOf<Float>, tolerance:ExprOf<Float>
 	  , x:ExprOf<Float> ) {
+	  	var expr = haxe.macro.Context.makeExpr( haxe.macro.ExprTools.toString( x ), x.pos );
 		return exec( macro {
 			var gtf__e = $expected;
 			var _t = $tolerance;
 			var gtf__x = $x;
 			if ( Math.abs( gtf__e - gtf__x ) <= _t )
-				gtf_passed( gtf__e+'+/-'+_t );
+				gtf_passed( gtf__e+'+/-'+_t, $expr );
 			else
-				gtf_failed( gtf__e+'+/-'+_t, gtf__x );
-		} );
+				gtf_failed( gtf__e+'+/-'+_t, gtf__x, $expr );
+		}, expr );
 	}
 	public macro function assertTrue( ethis:Expr, x:ExprOf<Bool> ) {
+		var expr = haxe.macro.Context.makeExpr( haxe.macro.ExprTools.toString( x ), x.pos );
 		return exec( macro {
 			var gtf__x = $x;
 			if ( gtf_equals( true, gtf__x ) )
-				gtf_passed( true );
+				gtf_passed( true, $expr );
 			else
-				gtf_failed( true, gtf__x );
-		} );
+				gtf_failed( true, gtf__x, $expr );
+		}, expr );
 	}
 	public macro function assertFalse( ethis:Expr, x:ExprOf<Bool> ) {
+		var expr = haxe.macro.Context.makeExpr( haxe.macro.ExprTools.toString( x ), x.pos );
 		return exec( macro {
 			var gtf__x = $x;
 			if ( gtf_equals( false, gtf__x ) )
-				gtf_passed( false );
+				gtf_passed( false, $expr );
 			else
-				gtf_failed( false, gtf__x );
-		} );
+				gtf_failed( false, gtf__x, $expr );
+		}, expr );
 	}
 	public macro function assertRaises<A>( ethis:Expr, expected:ExprOf<A>, x:ExprOf<A> ) {
+		var expr = haxe.macro.Context.makeExpr( haxe.macro.ExprTools.toString( x ), x.pos );
 		return macro {
 			var gtf_raised = false;
 			var gtf_excp = null;
@@ -67,25 +72,27 @@ class Test {
 			try { $x; }
 			catch ( n:Dynamic ) { gtf_raised = true; gtf_excp = n; }
 			if ( !gtf_raised )
-				gtf_failed( gtf__e, gtf_noException() );
+				gtf_failed( gtf__e, gtf_noException(), $expr );
 			else if ( !gtf_equals( gtf__e, gtf_excp ) )
-				gtf_failed( gtf__e, gtf_excp );
+				gtf_failed( gtf__e, gtf_excp, $expr );
 			else
-				gtf_passed( gtf__e );
+				gtf_passed( gtf__e, $expr );
 		};
 	}
 	public macro function assertThrows<A>( ethis:Expr, x:ExprOf<A> ) {
+		var expr = haxe.macro.Context.makeExpr( haxe.macro.ExprTools.toString( x ), x.pos );
 		return macro {
 			var gtf_raised = false;
 			try { $x; }
 			catch ( n:Dynamic ) { gtf_raised = true; }
 			if ( !gtf_raised )
-				gtf_failed( gtf_anyException(), gtf_noException() );
+				gtf_failed( gtf_anyException(), gtf_noException(), $expr );
 			else
-				gtf_passed( gtf_anyException() );
+				gtf_passed( gtf_anyException(), $expr );
 		};
 	}
 	public macro function time<A>( ethis:Expr, x:ExprOf<A> ) {
+		var expr = haxe.macro.Context.makeExpr( haxe.macro.ExprTools.toString( x ), x.pos );
 		return took_exec( macro {
 			var gtf_t = 0.;
 			var gtf_k = 0;
@@ -101,20 +108,20 @@ class Test {
 				}
 			}
 			// trace( gtf_k*2 );
-			gtf_took( gtf_t/gtf_k/2 );
-		} );
+			gtf_took( gtf_t/gtf_k/2, $expr );
+		}, expr );
 	}
 
 #if macro
-	public static function exec<A>( a:ExprOf<A> ) {
+	public static function exec<A>( a:ExprOf<A>, expr:ExprOf<String> ) {
 		return macro
 			try { $a; }
-			catch (e:Dynamic) { gtf_error( e ); };
+			catch (e:Dynamic) { gtf_error( e, $expr ); };
 	}
-	public static function took_exec<A>( a:ExprOf<A> ) {
+	public static function took_exec<A>( a:ExprOf<A>, expr:ExprOf<String> ) {
 		return macro
 			try { $a; }
-			catch (e:Dynamic) { gtf_took_error( e ); };	
+			catch (e:Dynamic) { gtf_took_error( e, $expr ); };
 	}
 #end
 }

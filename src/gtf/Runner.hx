@@ -22,29 +22,29 @@ class Runner {
 			}
 			// trace( Type.getClassName( cl ) );
 
-			suite.gtf_passed = function ( e, ?p ) {
+			suite.gtf_passed = function ( e, expr, ?p ) {
 				ares.assertions++;
-				ares.passed.push( { expected:e, pos:p } );
+				ares.passed.push( { expected:e, expr:expr, pos:p } );
 				// haxe.Log.trace( 'passed $e', p );
 			}
-			suite.gtf_failed = function ( e, g, ?p ) {
+			suite.gtf_failed = function ( e, g, expr, ?p ) {
 				ares.assertions++;
-				ares.failed.push( { expected:e, got:g, pos:p } );
+				ares.failed.push( { expected:e, got:g, expr:expr, pos:p } );
 				// haxe.Log.trace( '\x1b[1mFAILED\x1b[0m $e, got $g', p );
 			}
-			suite.gtf_error = function ( e, ?p ) {
+			suite.gtf_error = function ( e, expr, ?p ) {
 				ares.assertions++;
-				ares.errors.push( { error:e, pos:p } );
+				ares.errors.push( { error:e, expr:expr, pos:p } );
 				// haxe.Log.trace( '\x1b[1;4mERROR\x1b[0m $e', p );
 			}
-			suite.gtf_took = function ( s, ?p ) {
+			suite.gtf_took = function ( s, expr, ?p ) {
 				tres.tests++;
-				tres.results.push( { seconds:s, pos:p } );
+				tres.results.push( { seconds:s, expr:expr, pos:p } );
 				// haxe.Log.trace( 'took ${1e-3*s} ms', p );
 			}
-			suite.gtf_took_error = function ( e, ?p ) {
+			suite.gtf_took_error = function ( e, expr, ?p ) {
 				tres.tests++;
-				tres.errors.push( { error:e, pos:p } );
+				tres.errors.push( { error:e, expr:expr, pos:p } );
 				// haxe.Log.trace( '\x1b[1;4mERROR\x1b[0m $e', p );
 			}
 
