@@ -1,7 +1,7 @@
 package gtf;
 
 class Runner {
-	
+
 	var suites:Array<Test>;
 
 	public function new( _suites:Iterable<Test> ) {
@@ -10,7 +10,7 @@ class Runner {
 
 	public function run() {
 		var ares = new AssertResult();
-		// var tres = new TimerResult();
+		var tres = new TimingResult();
 
 		for ( suite in suites ) {
 
@@ -22,23 +22,30 @@ class Runner {
 			}
 			// trace( Type.getClassName( cl ) );
 
-			suite.passed = function ( e, ?p ) {
+			suite.gtf_passed = function ( e, ?p ) {
 				ares.assertions++;
 				ares.passed.push( { expected:e, pos:p } );
-				// trace( '${p.className}:${p.methodName}:${p.lineNumber}  passed $e' );
+				// haxe.Log.trace( 'passed $e', p );
 			}
-			suite.failed = function ( e, g, ?p ) {
+			suite.gtf_failed = function ( e, g, ?p ) {
 				ares.assertions++;
 				ares.failed.push( { expected:e, got:g, pos:p } );
-				// trace( '${p.className}:${p.methodName}:${p.lineNumber}  FAILED $e, got $g' );
+				// haxe.Log.trace( '\x1b[1mFAILED\x1b[0m $e, got $g', p );
 			}
-			suite.error = function ( e, ?p ) {
+			suite.gtf_error = function ( e, ?p ) {
 				ares.assertions++;
 				ares.errors.push( { error:e, pos:p } );
-				// trace( '${p.className}:${p.methodName}:${p.lineNumber}  ERROR $e' );
+				// haxe.Log.trace( '\x1b[1;4mERROR\x1b[0m $e', p );
 			}
-			suite.took = function ( s, ?p ) {
-				trace( '${p.className}:${p.methodName}:${p.lineNumber}  took ${1e3*s} ms' );
+			suite.gtf_took = function ( s, ?p ) {
+				tres.tests++;
+				tres.results.push( { seconds:s, pos:p } );
+				// haxe.Log.trace( 'took ${1e-3*s} ms', p );
+			}
+			suite.gtf_took_error = function ( e, ?p ) {
+				tres.tests++;
+				tres.errors.push( { error:e, pos:p } );
+				// haxe.Log.trace( '\x1b[1;4mERROR\x1b[0m $e', p );
 			}
 
 			// metadata and fields
@@ -79,7 +86,7 @@ class Runner {
 
 		}
 
-		return new Result( ares, null );
+		return new Result( ares, tres );
 	}
 
 }

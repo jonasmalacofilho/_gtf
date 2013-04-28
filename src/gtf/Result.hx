@@ -1,10 +1,14 @@
 package gtf;
 
 class Result {
-	public var assert( default, null ):Null<AssertResult>;
-	// public var time( default, null ):Null<TimeResult>;
-	public function new( _assert, _time ) {
+	
+	public var assert( default, null ):AssertResult;
+	public var timing( default, null ):TimingResult;
+
+	@:allow( gtf.Runner )
+	function new( _assert, _time ) {
 		assert = _assert;
-		// time = _time;
+		timing = _time;
 	}
+
 }
