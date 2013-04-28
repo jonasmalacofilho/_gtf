@@ -1,0 +1,4 @@
+-neko bin/neko/BaseTest.n
+-main BaseTest
+-cp src
+-cp basetest
