@@ -1,5 +1,5 @@
--main Test.hx
+-main SelfTest.hx
 -cp src
--cp test
--neko bin/test.n
+-cp selftest
+-neko bin/neko/SelfTest.n
 #-D dump=pretty

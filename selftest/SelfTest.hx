@@ -1,4 +1,4 @@
-class Test {
+class SelfTest {
 	var tests:Array<Dynamic>;
 
 	function new() {
@@ -22,7 +22,7 @@ class Test {
 	}
 
 	static function main() {
-		var t = new Test();
+		var t = new SelfTest();
 		t.runTests();
 	}
 
