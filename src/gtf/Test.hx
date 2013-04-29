@@ -59,7 +59,7 @@ class Test {
 		var expr = haxe.macro.Context.makeExpr( haxe.macro.ExprTools.toString( x ), x.pos );
 		return exec( macro {
 			var gtf__x = $x;
-			if ( gtf_equals( true, gtf__x ) )
+			if ( gtf__x )
 				gtf_passed( true, $expr );
 			else
 				gtf_failed( true, gtf__x, $expr );
@@ -69,7 +69,7 @@ class Test {
 		var expr = haxe.macro.Context.makeExpr( haxe.macro.ExprTools.toString( x ), x.pos );
 		return exec( macro {
 			var gtf__x = $x;
-			if ( gtf_equals( false, gtf__x ) )
+			if ( !gtf__x )
 				gtf_passed( false, $expr );
 			else
 				gtf_failed( false, gtf__x, $expr );
@@ -101,6 +101,19 @@ class Test {
 				gtf_failed( gtf_anyException(), gtf_noException(), $expr );
 			else
 				gtf_passed( gtf_anyException(), $expr );
+		};
+	}
+	public macro function assertNoThrow<A>( ethis:Expr, x:ExprOf<A> ) {
+		var expr = haxe.macro.Context.makeExpr( haxe.macro.ExprTools.toString( x ), x.pos );
+		return macro {
+			var gtf_raised = false;
+			var gtf_excp = null;
+			try { $x; }
+			catch ( n:Dynamic ) { gtf_raised = true; gtf_excp = n; }
+			if ( gtf_raised )
+				gtf_failed( gtf_noException(), gtf_excp, $expr );
+			else
+				gtf_passed( gtf_noException(), $expr );
 		};
 	}
 	public macro function time<A>( ethis:Expr, x:ExprOf<A> ) {
