@@ -1,4 +1,4 @@
-class TestFloat extends gtf.Test {
+class AssertFloat extends gtf.Test {
 
 	public function new() {}
 
@@ -25,9 +25,9 @@ class TestFloat extends gtf.Test {
 		assertFalse( Math.isNaN( Math.NEGATIVE_INFINITY ) );
 		assertFalse( Math.isFinite( Math.NaN ) );
 		// +/-inf is NOT great/less than NaN
-		assertFalse( Math.POSITIVE_INFINITY > Math.NaN );
+		assertFalse( Math.POSITIVE_INFINITY > Math.NaN ); // fails on neko
 		assertFalse( Math.POSITIVE_INFINITY < Math.NaN );
-		assertFalse( Math.NEGATIVE_INFINITY > Math.NaN );
+		assertFalse( Math.NEGATIVE_INFINITY > Math.NaN ); // fails on neko
 		assertFalse( Math.NEGATIVE_INFINITY < Math.NaN );
 	}
 
@@ -37,7 +37,7 @@ class TestFloat extends gtf.Test {
 		// NaN != NaN && NaN !> NaN && NaN !< NaN
 		assertDifferent( Math.NaN, Math.NaN );
 		assertFalse( Math.NaN < Math.NaN );
-		assertFalse( Math.NaN > Math.NaN );
+		assertFalse( Math.NaN > Math.NaN ); // fails on neko
 	}
 
 	@test function testExceptions() {
