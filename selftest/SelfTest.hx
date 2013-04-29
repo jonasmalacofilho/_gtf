@@ -11,12 +11,19 @@ class SelfTest {
 
 		var x = new gtf.Runner( tests );
 		var y = x.run();
-		trace( [ y.assert.assertions, y.assert.passed.length, y.assert.failed.length, y.assert.errors.length ] );
+
 		trace( 'passed: ' + y.assert.passed );
+		trace( 'Timed: ' + y.timing.results );
+
 		trace( 'Failed: ' + y.assert.failed );
 		trace( 'ERRORS: ' + y.assert.errors );
-		trace( 'Timed: ' + y.timing.results );
 		trace( 'Timing ERRORS: ' + y.timing.errors );
+
+		trace( '${y.assert.assertions} assertions, passed ${y.assert.passed.length}, failed ${y.assert.failed.length}'
+		+ ' and ${y.assert.errors.length} errors.' );
+		trace( 'EXPECTED 17, 6, 7, 4' );
+		trace( '${y.timing.tests} timing tests, completed ${y.timing.results.length} and ${y.timing.errors.length} errors.' );
+		trace( 'EXPECTED 13, 13, 0' );
 
 		haxe.Log.trace = _trace;
 	}

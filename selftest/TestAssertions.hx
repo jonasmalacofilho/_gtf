@@ -31,9 +31,9 @@ class TestAssertions extends gtf.Test {
 	}
 
 	@test function _assertRaises() {
-		assertRaises( '!', throw 'An error!' );
-		assertRaises( '!', throw 'Another error#' );
-		assertRaises( '!', 10 );
+		assertRaises( 'An error!', throw 'An error!' );
+		assertRaises( 'An error!', throw 'Another error#' );
+		assertRaises( 'An error!', 10 );
 	}
 	
 }
