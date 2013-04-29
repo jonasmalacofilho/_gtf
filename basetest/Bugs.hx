@@ -5,11 +5,14 @@ class Bugs extends gtf.Test {
 	#if neko
 	@test public function neko() {
 		// TestFloat.AssertFloat.testInfNaN
-		assertFalse( Math.POSITIVE_INFINITY > Math.NaN );
-		assertFalse( Math.NEGATIVE_INFINITY > Math.NaN );
+		// Reported: https://code.google.com/p/nekovm/issues/detail?id=38
+		assertFalse( Math.POSITIVE_INFINITY > Math.NaN ); // Math.NaN is unordered
+		assertFalse( Math.NEGATIVE_INFINITY > Math.NaN ); // Math.NaN is unordered
 		// TestFloat.AssertFloat.testNaNEqNeq
-		assertFalse( Math.NaN > Math.NaN );
+		// Reported: https://code.google.com/p/nekovm/issues/detail?id=38
+		assertFalse( Math.NaN > Math.NaN ); // Math.NaN is unordered
 		// TestDS.AssertMap.testNullKey
+		// Reported: https://code.google.com/p/nekovm/issues/detail?id=38
 		assertEquals( -10, { var x = new Map<Null<String>,Int>(); x.set( null, -10 ); x.get( null ); } );
 	}
 	#end
