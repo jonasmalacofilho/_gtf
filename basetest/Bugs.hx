@@ -11,7 +11,6 @@ class Bugs extends gtf.Test {
 		// TestFloat.AssertFloat.testNaNEqNeq
 		// Reported: https://code.google.com/p/nekovm/issues/detail?id=38
 		assertFalse( Math.NaN > Math.NaN ); // Math.NaN is unordered
-		// NOT REPORTED
 		assertFalse( 0. > Math.NaN ); // Math.NaN is unordered
 		// TestDS.AssertMap.testNullKey
 		// Reported: https://code.google.com/p/nekovm/issues/detail?id=38
