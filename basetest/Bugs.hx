@@ -19,7 +19,7 @@ class Bugs extends gtf.Test {
 
 	#if cpp
 	@test public function cpp() {
-		// TestDynamic.AssertDynamic.testFloat
+		// TestDynamic.AssertDynamic.testComparisson
 		assertTrue( TestDynamic.AssertDynamic.convert( Math.POSITIVE_INFINITY ) == TestDynamic.AssertDynamic.convert( Math.POSITIVE_INFINITY ) );
 		assertTrue( TestDynamic.AssertDynamic.convert( Math.NEGATIVE_INFINITY ) == TestDynamic.AssertDynamic.convert( Math.NEGATIVE_INFINITY ) );
 	}
