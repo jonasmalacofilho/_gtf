@@ -1,4 +1,4 @@
--cpp bin/cpp64
+-cpp bin/cpp64/BaseTest
 -main BaseTest
 -cp src
 -cp basetest
