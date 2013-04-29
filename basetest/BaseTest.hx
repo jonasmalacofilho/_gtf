@@ -4,7 +4,8 @@ class BaseTest {
 
 	function new() {
 		tests = [ new TestFloat.AssertFloat()
-		, new TestDS.AssertMap(), new TestDS.TimeDS() ];
+		, new TestDS.AssertMap(), new TestDS.TimeDS()
+		, new TestDynamic.AssertDynamic() ];
 	}
 
 	function runTests() {

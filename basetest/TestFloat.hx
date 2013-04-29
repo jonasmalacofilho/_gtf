@@ -2,6 +2,10 @@ class AssertFloat extends gtf.Test {
 
 	public function new() {}
 
+	@test function testMixedInt() {
+		assertTrue( 0 == 0. );
+	}
+
 	@test function testInfGtLt() {
 		// basic ordering
 		assertTrue( 0. < Math.POSITIVE_INFINITY );

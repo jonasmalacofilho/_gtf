@@ -16,7 +16,7 @@ class Test {
 
 	// equality comparisson, may be overriden
 	// default is ==, and uses values for basic types Bool, Int, String and references for everything else
-	// if not inlined causes Math.POSITIVE_INFINITY!=Math.POSITIVE_INFINITY on Hxcpp and Linux
+	// if not inlined causes Math.POSITIVE_INFINITY!=Math.POSITIVE_INFINITY on Hxcpp and Linux (because it A gets typed as Dynamic)
 	public inline function gtf_equals<A>( a:A, b:A )
 		return a==b;
 
