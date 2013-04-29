@@ -11,6 +11,8 @@ class Bugs extends gtf.Test {
 		// TestFloat.AssertFloat.testNaNEqNeq
 		// Reported: https://code.google.com/p/nekovm/issues/detail?id=38
 		assertFalse( Math.NaN > Math.NaN ); // Math.NaN is unordered
+		// NOT REPORTED
+		assertFalse( 0. > Math.NaN ); // Math.NaN is unordered
 		// TestDS.AssertMap.testNullKey
 		// Reported: https://code.google.com/p/nekovm/issues/detail?id=38
 		assertEquals( -10, { var x = new Map<Null<String>,Int>(); x.set( null, -10 ); x.get( null ); } );
@@ -20,6 +22,7 @@ class Bugs extends gtf.Test {
 	#if cpp
 	@test public function cpp() {
 		// TestDynamic.AssertDynamic.testComparisson
+		// NOT REPORTED
 		assertTrue( TestDynamic.AssertDynamic.convert( Math.POSITIVE_INFINITY ) == TestDynamic.AssertDynamic.convert( Math.POSITIVE_INFINITY ) );
 		assertTrue( TestDynamic.AssertDynamic.convert( Math.NEGATIVE_INFINITY ) == TestDynamic.AssertDynamic.convert( Math.NEGATIVE_INFINITY ) );
 	}

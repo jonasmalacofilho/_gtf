@@ -42,6 +42,10 @@ class AssertFloat extends gtf.Test {
 		assertDifferent( Math.NaN, Math.NaN );
 		assertFalse( Math.NaN < Math.NaN );
 		assertFalse( Math.NaN > Math.NaN ); // fails on neko
+		// x != NaN && x !> NaN && x !< NaN
+		assertDifferent( 0., Math.NaN );
+		assertFalse( 0. < Math.NaN );
+		assertFalse( 0. > Math.NaN ); // fails on neko
 	}
 
 	@test function testExceptions() {
