@@ -1,9 +1,10 @@
-class PerfTest {
+class Impl {
 
 	var tests:Array<Dynamic>;
 
 	function new() {
-		tests = [ new ChooseVector.ChooseVector2(), new ChooseVector.ChooseVector3() ];
+		tests = [ new ChooseVector.ChooseVector2(), new ChooseVector.ChooseVector3()
+		, new ChooseDigraph() ];
 	}
 
 	function runTests() {
@@ -28,7 +29,7 @@ class PerfTest {
 	}
 
 	static function main() {
-		var t = new PerfTest();
+		var t = new Impl();
 		t.runTests();
 	}
 

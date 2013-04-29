@@ -1,5 +1,0 @@
--cpp bin/cpp64/PerfTest
--main PerfTest
--cp src
--cp perftest
--D HXCPP_M64

@@ -1,0 +1,4 @@
+-neko bin/neko/Impl.n
+-main Impl
+-cp src
+-cp impl

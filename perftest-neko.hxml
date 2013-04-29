@@ -1,4 +1,0 @@
--neko bin/neko/PerfTest.n
--main PerfTest
--cp src
--cp perftest
