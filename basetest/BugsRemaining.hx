@@ -13,15 +13,14 @@ class BugsRemaining {
 		var x = new gtf.Runner( tests );
 		var y = x.run();
 		
-		trace( 'remaining: ' + y.assert.passed );
+		trace( 'fixed: ' + y.assert.passed );
 		// trace( 'Timed: ' + y.timing.results );
 
-		trace( 'fixed?: ' + y.assert.failed );
+		trace( 'remaining: ' + y.assert.failed );
 		trace( 'ERRORS: ' + y.assert.errors );
 		// trace( 'Timing ERRORS: ' + y.timing.errors );
 
-		trace( '${y.assert.assertions} assertions, remaining ${y.assert.passed.length}, maybe fixed ${y.assert.failed.length}'
-		+ ' and ${y.assert.errors.length} errors.' );
+		trace( '${y.assert.assertions} assertions, fixed ${y.assert.passed.length}, remaining/failed/errors ${y.assert.failed.length+y.assert.errors.length}' );
 		// trace( '${y.timing.tests} timing tests, completed ${y.timing.results.length} and ${y.timing.errors.length} errors.' );
 
 		haxe.Log.trace = _trace;

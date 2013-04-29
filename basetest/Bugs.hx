@@ -5,20 +5,20 @@ class Bugs extends gtf.Test {
 	#if neko
 	@test public function neko() {
 		// TestFloat.AssertFloat.testInfNaN
-		assertTrue( Math.POSITIVE_INFINITY > Math.NaN );
-		assertTrue( Math.NEGATIVE_INFINITY > Math.NaN );
+		assertFalse( Math.POSITIVE_INFINITY > Math.NaN );
+		assertFalse( Math.NEGATIVE_INFINITY > Math.NaN );
 		// TestFloat.AssertFloat.testNaNEqNeq
-		assertTrue( Math.NaN > Math.NaN );
+		assertFalse( Math.NaN > Math.NaN );
 		// TestDS.AssertMap.testNullKey
-		assertThrows( new Map<Null<String>,Int>().set( null, -10 ) );
+		assertEquals( -10, { var x = new Map<Null<String>,Int>(); x.set( null, -10 ); x.get( null ); } );
 	}
 	#end
 
 	#if cpp
 	@test public function cpp() {
 		// TestDynamic.AssertDynamic.testFloat
-		assertFalse( TestDynamic.AssertDynamic.convert( Math.POSITIVE_INFINITY ) == TestDynamic.AssertDynamic.convert( Math.POSITIVE_INFINITY ) );
-		assertFalse( TestDynamic.AssertDynamic.convert( Math.NEGATIVE_INFINITY ) == TestDynamic.AssertDynamic.convert( Math.NEGATIVE_INFINITY ) );
+		assertTrue( TestDynamic.AssertDynamic.convert( Math.POSITIVE_INFINITY ) == TestDynamic.AssertDynamic.convert( Math.POSITIVE_INFINITY ) );
+		assertTrue( TestDynamic.AssertDynamic.convert( Math.NEGATIVE_INFINITY ) == TestDynamic.AssertDynamic.convert( Math.NEGATIVE_INFINITY ) );
 	}
 	#end
 
