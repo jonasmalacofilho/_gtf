@@ -2,3 +2,10 @@
 -main BaseTest
 -cp src
 -cp basetest
+
+--next
+
+-neko bin/neko/BugsRemaining.n
+-main BugsRemaining
+-cp src
+-cp basetest
