@@ -1,0 +1,5 @@
+-main SelfTest.hx
+-cp src
+-cp selftest
+-java bin/java/SelfTest
+#-D dump=pretty
