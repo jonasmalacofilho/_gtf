@@ -16,8 +16,8 @@ cat out/neko/BugsRemaining
 echo -e "----------------        \x1b[1;1mhxcpp\x1b[0;0m       ----------------"
 cat out/cpp64/BugsRemaining
 
-echo -e "================        \x1b[1;4mImpl\x1b[0;0m        ================"
+echo -e "================      \x1b[1;4mImplTest\x1b[0;0m      ================"
 echo -e "----------------        \x1b[1;1mneko\x1b[0;0m        ----------------"
-cat out/neko/Impl
+cat out/neko/ImplTest
 echo -e "----------------        \x1b[1;1mhxcpp\x1b[0;0m       ----------------"
-cat out/cpp64/Impl
+cat out/cpp64/ImplTest

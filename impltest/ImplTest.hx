@@ -1,4 +1,4 @@
-class Impl {
+class ImplTest {
 
 	var tests:Array<Dynamic>;
 
@@ -29,7 +29,7 @@ class Impl {
 	}
 
 	static function main() {
-		var t = new Impl();
+		var t = new ImplTest();
 		t.runTests();
 	}
 

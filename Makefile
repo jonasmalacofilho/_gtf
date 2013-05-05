@@ -1,72 +1,72 @@
 GTF_SOURCE=src
 SELFTEST_SOURCE=selftest
 BASETEST_SOURCE=basetest
-IMPL_SOURCE=impl
-
-# GTF_SOURCE = src/gtf/Test.hx src/gtf/Runner.hx src/gtf/Result.hx src/gtf/AssertResult.hx src/gtf/TimingResult.hx
-# SELFTEST_SOURCE = selftest/SelfTest.hx selftest/TestAssertions.hx selftest/TestTiming.hx
-# BASETEST_SOURCE = basetest/BaseTest.hx basetest/TestFloat.hx basetest/TestDynamic.hx basetest/TestDS.hx basetest/BugsRemaining.hx basetest/Bugs.hx
-# IMPL_SOURCE = impl/Impl.hx impl/ChooseVector.hx impl/ChooseDigraph.hx
+IMPL_SOURCE=impltest
 
 #compile all
-all: bin/neko/SelfTest.n bin/neko/BaseTest.n bin/neko/BugsRemaining.n bin/neko/Impl.n bin/cpp64/SelfTest/SelfTest bin/cpp64/BaseTest/BaseTest bin/cpp64/BugsRemaining/BugsRemaining bin/cpp64/Impl/Impl
+all: cSelfTest cBaseTest cBugsRemaining cImplTest
+
+#run all
+run: SelfTest BaseTest BugsRemaining ImplTest
 
 #clean all
 clean:
 	rm -Rf bin
-	rm -Rf bin
-	rm -Rf out
 	rm -Rf out
 
-#make dirs
-mkdirs:
-	mkdir bin 2> /dev/null
-	mkdir bin/neko 2> /dev/null
-	mkdir bin/cpp64 2> /dev/null
-	mkdir out 2> /dev/null
-	mkdir out/neko 2> /dev/null
-	mkdir out/cpp64 2> /dev/null
-
-#run all
-run: out/neko/SelfTest out/neko/BaseTest out/neko/BugsRemaining out/neko/Impl out/cpp64/SelfTest out/cpp64/BaseTest out/cpp64/BugsRemaining out/cpp64/Impl
-
-#print all
-print: run
-	./printAll.sh
-
-
+#compilation
+cSelfTest: mkdirs bin/neko/SelfTest.n bin/cpp64/SelfTest/SelfTest
+cBaseTest: mkdirs bin/neko/BaseTest.n bin/cpp64/BaseTest/BaseTest
+cBugsRemaining: mkdirs bin/neko/BugsRemaining.n bin/cpp64/BugsRemaining/BugsRemaining
+cImplTest: mkdirs bin/neko/ImplTest.n bin/cpp64/ImplTest/ImplTest
 #neko builds
-bin/neko/SelfTest.n: ${GTF_SOURCE} ${SELFTEST_SOURCE} selftest-neko.hxml
-	haxe selftest-neko.hxml
-bin/neko/BaseTest.n bin/neko/BugsRemaining.n: ${GTF_SOURCE} ${BASETEST_SOURCE} basetest-neko.hxml
-	haxe basetest-neko.hxml
-bin/neko/Impl.n: ${GTF_SOURCE} ${IMPL_SOURCE} impl-neko.hxml
-	haxe impl-neko.hxml
-
-#hxcpp builds
-bin/cpp64/SelfTest/SelfTest: ${GTF_SOURCE} ${SELFTEST_SOURCE} selftest-cpp.hxml
-	haxe selftest-cpp.hxml
-bin/cpp64/BaseTest/BaseTest bin/cpp64/BugsRemaining/BugsRemaining: ${GTF_SOURCE} ${BASETEST_SOURCE} basetest-cpp.hxml
-	haxe basetest-cpp.hxml
-bin/cpp64/Impl/Impl: ${GTF_SOURCE} ${IMPL_SOURCE} impl-cpp.hxml
-	haxe impl-cpp.hxml
+bin/neko/SelfTest.n: ${GTF_SOURCE} ${SELFTEST_SOURCE}
+	haxe -cp ${GTF_SOURCE} -cp ${SELFTEST_SOURCE} -main SelfTest -neko bin/neko/SelfTest.n
+bin/neko/BaseTest.n: ${GTF_SOURCE} ${BASETEST_SOURCE}
+	haxe -cp ${GTF_SOURCE} -cp ${BASETEST_SOURCE} -main BaseTest -neko bin/neko/BaseTest.n
+bin/neko/BugsRemaining.n: ${GTF_SOURCE} ${BASETEST_SOURCE}
+	haxe -cp ${GTF_SOURCE} -cp ${BASETEST_SOURCE} -main BugsRemaining -neko bin/neko/BugsRemaining.n
+bin/neko/ImplTest.n: ${GTF_SOURCE} ${IMPL_SOURCE}
+	haxe -cp ${GTF_SOURCE} -cp ${IMPL_SOURCE} -main ImplTest -neko bin/neko/ImplTest.n
+#hxcpp M64 builds
+bin/cpp64/SelfTest/SelfTest: ${GTF_SOURCE} ${SELFTEST_SOURCE}
+	haxe -cp ${GTF_SOURCE} -cp ${SELFTEST_SOURCE} -main SelfTest -cpp bin/cpp64/SelfTest -D HXCPP_M64
+bin/cpp64/BaseTest/BaseTest: ${GTF_SOURCE} ${BASETEST_SOURCE}
+	haxe -cp ${GTF_SOURCE} -cp ${BASETEST_SOURCE} -main BaseTest -cpp bin/cpp64/BaseTest -D HXCPP_M64
+bin/cpp64/BugsRemaining/BugsRemaining: ${GTF_SOURCE} ${BASETEST_SOURCE}
+	haxe -cp ${GTF_SOURCE} -cp ${BASETEST_SOURCE} -main BugsRemaining -cpp bin/cpp64/BugsRemaining -D HXCPP_M64
+bin/cpp64/ImplTest/ImplTest: ${GTF_SOURCE} ${IMPL_SOURCE}
+	haxe -cp ${GTF_SOURCE} -cp ${IMPL_SOURCE} -main ImplTest -cpp bin/cpp64/ImplTest -D HXCPP_M64
 	
-#output
+#running
+SelfTest: cSelfTest out/neko/SelfTest out/cpp64/SelfTest
+BaseTest: cBaseTest out/neko/BaseTest out/cpp64/BaseTest
+BugsRemaining: cBugsRemaining out/neko/BugsRemaining out/cpp64/BugsRemaining
+ImplTest: cImplTest out/neko/ImplTest out/cpp64/ImplTest
+#neko
 out/neko/SelfTest: bin/neko/SelfTest.n
 	neko bin/neko/SelfTest.n > out/neko/SelfTest
 out/neko/BaseTest: bin/neko/BaseTest.n
 	neko bin/neko/BaseTest.n > out/neko/BaseTest
 out/neko/BugsRemaining: bin/neko/BugsRemaining.n
 	neko bin/neko/BugsRemaining.n > out/neko/BugsRemaining
-out/neko/Impl: bin/neko/Impl.n
-	neko bin/neko/Impl.n > out/neko/Impl
+out/neko/ImplTest: bin/neko/ImplTest.n
+	neko bin/neko/ImplTest.n > out/neko/ImplTest
+#hxcpp M64
 out/cpp64/SelfTest: bin/cpp64/SelfTest/SelfTest
 	bin/cpp64/SelfTest/SelfTest > out/cpp64/SelfTest
 out/cpp64/BaseTest: bin/cpp64/BaseTest/BaseTest
 	bin/cpp64/BaseTest/BaseTest > out/cpp64/BaseTest
 out/cpp64/BugsRemaining: bin/cpp64/BugsRemaining/BugsRemaining
 	bin/cpp64/BugsRemaining/BugsRemaining > out/cpp64/BugsRemaining
-out/cpp64/Impl: bin/cpp64/Impl/Impl
-	bin/cpp64/Impl/Impl > out/cpp64/Impl
+out/cpp64/ImplTest: bin/cpp64/ImplTest/ImplTest
+	bin/cpp64/ImplTest/ImplTest > out/cpp64/ImplTest
 
-.PHONY: all clean mkdirs run print
+#make dirs
+mkdirs:
+	mkdir -p bin/neko
+	mkdir -p bin/cpp64
+	mkdir -p out/neko
+	mkdir -p out/cpp64
+
+.PHONY: all run clean cSelfTest cBaseTest cBugsRemaining cImplTest SelfTest BaseTest BugsRemaining ImplTest mkdirs

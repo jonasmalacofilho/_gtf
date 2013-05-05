@@ -1,6 +1,0 @@
--main SelfTest.hx
--cp src
--cp selftest
--cpp bin/cpp64/SelfTest
--D HXCPP_M64
-#-D dump=pretty
