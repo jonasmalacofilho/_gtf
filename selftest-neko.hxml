@@ -1,5 +1,0 @@
--main SelfTest.hx
--cp src
--cp selftest
--neko bin/neko/SelfTest.n
-#-D dump=pretty
