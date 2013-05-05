@@ -12,12 +12,12 @@ class AssertMap extends gtf.Test {
 		assertEquals( [-11].toString(), [ for ( y in x ) y ].toString() );
 
 		var x = new Map<Null<String>,Int>();
-		assertNoThrow( x.set( null, -20 ) ); // raises exception on neko and java
-		assertTrue( x.exists( null ) ); // raises exception on java
-		assertEquals( -20, x.get( null ) ); // raises exception on java
-		assertEquals( [-20].toString(), [ for ( y in x ) y ].toString() );
-		assertNoThrow( x.set( null, -21 ) ); // raises exception on neko and java
-		assertEquals( [-21].toString(), [ for ( y in x ) y ].toString() );
+		assertNoThrow( x.set( null, -20 ) ); // fails on neko and java
+		assertTrue( x.exists( null ) ); // raises exception on neko and java
+		assertEquals( -20, x.get( null ) ); // raises exception on neko and java
+		assertEquals( [-20].toString(), [ for ( y in x ) y ].toString() ); // fails on neko and java
+		assertNoThrow( x.set( null, -21 ) ); // fails on neko and java
+		assertEquals( [-21].toString(), [ for ( y in x ) y ].toString() ); // fails on neko and java
 	}
 
 	@test public function testNullValue() {

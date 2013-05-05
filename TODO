@@ -5,3 +5,6 @@ Create tests for:
 Report bugs:
 - Map<Null<String>,A> with null keys (Neko/Java)
 - Dynamic and Math.NaN (Cpp)
+
+Other:
+- Report that method named java clauses conflict (Java)

@@ -14,7 +14,7 @@ class Bugs extends gtf.Test {
 		assertFalse( 0. > Math.NaN ); // Math.NaN is unordered
 		// TestDS.AssertMap.testNullKey
 		// NOT REPORTED YET
-		assertEquals( -20, { var x = new Map<Null<String>,Int>(); x.set( null, -20 ); x.get( null ); } );
+		assertEquals( -20, { var x = new Map<Null<String>,Int>(); x.set( null, -20 ); x.exists( null ); x.get( null ); } );
 	}
 	#end
 
@@ -31,7 +31,7 @@ class Bugs extends gtf.Test {
 	@test public function javaBugs() {
 		// TestDS.AssertMap.testNullKey
 		// NOT REPORTED YET
-		assertEquals( -20, { var x = new Map<Null<String>,Int>(); x.set( null, -20 ); x.get( null ); } );
+		assertEquals( -20, { var x = new Map<Null<String>,Int>(); x.set( null, -20 ); x.exists( null ); x.get( null ); } );
 	}
 	#end
 
