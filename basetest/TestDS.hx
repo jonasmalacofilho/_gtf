@@ -4,45 +4,45 @@ class AssertMap extends gtf.Test {
 
 	@test public function testNullKey() {
 		var x = new Map<Null<Int>,Int>();
-		try { x.set( null, -10 ); } catch( e:Dynamic ) { trace( e ); }
+		assertNoThrow( x.set( null, -10 ) );
 		assertTrue( x.exists( null ) );
 		assertEquals( -10, x.get( null ) );
 		assertEquals( [-10].toString(), [ for ( y in x ) y ].toString() );
-		try { x.set( null, -11 ); } catch( e:Dynamic ) { trace( e ); }
+		assertNoThrow( x.set( null, -11 ) );
 		assertEquals( [-11].toString(), [ for ( y in x ) y ].toString() );
 
 		var x = new Map<Null<String>,Int>();
-		try { x.set( null, -10 ); } catch( e:Dynamic ) { trace( e ); } // raises exception on neko
-		assertTrue( x.exists( null ) );
-		assertEquals( -10, x.get( null ) );
-		assertEquals( [-10].toString(), [ for ( y in x ) y ].toString() );
-		try { x.set( null, -11 ); } catch( e:Dynamic ) { trace( e ); } // raises exception on neko
-		assertEquals( [-11].toString(), [ for ( y in x ) y ].toString() );
+		assertNoThrow( x.set( null, -20 ) ); // raises exception on neko and java
+		assertTrue( x.exists( null ) ); // raises exception on java
+		assertEquals( -20, x.get( null ) ); // raises exception on java
+		assertEquals( [-20].toString(), [ for ( y in x ) y ].toString() );
+		assertNoThrow( x.set( null, -21 ) ); // raises exception on neko and java
+		assertEquals( [-21].toString(), [ for ( y in x ) y ].toString() );
 	}
 
 	@test public function testNullValue() {
 		var x = new Map<Int,Null<Int>>();
-		try { x.set( -10, null ); } catch( e:Dynamic ) { trace( e ); }
+		assertNoThrow( x.set( -10, null ) );
 		assertTrue( x.exists( -10 ) );
 		assertEquals( null, x.get( -10 ) );
 		assertEquals( [null].toString(), [ for ( y in x ) y ].toString() );
 
 		var x = new Map<Int,Null<String>>();
-		try { x.set( -10, null ); } catch( e:Dynamic ) { trace( e ); }
-		assertTrue( x.exists( -10 ) );
-		assertEquals( null, x.get( -10 ) );
+		assertNoThrow( x.set( -20, null ) );
+		assertTrue( x.exists( -20 ) );
+		assertEquals( null, x.get( -20 ) );
 		assertEquals( [null].toString(), [ for ( y in x ) y ].toString() );
 
 		var x = new Map<String,Null<Int>>();
-		try { x.set( '-10', null ); } catch( e:Dynamic ) { trace( e ); }
-		assertTrue( x.exists( '-10' ) );
-		assertEquals( null, x.get( '-10' ) );
+		assertNoThrow( x.set( '-30', null ) );
+		assertTrue( x.exists( '-30' ) );
+		assertEquals( null, x.get( '-30' ) );
 		assertEquals( [null].toString(), [ for ( y in x ) y ].toString() );
 
 		var x = new Map<String,Null<String>>();
-		try { x.set( '-10', null ); } catch( e:Dynamic ) { trace( e ); }
-		assertTrue( x.exists( '-10' ) );
-		assertEquals( null, x.get( '-10' ) );
+		assertNoThrow( x.set( '-40', null ) );
+		assertTrue( x.exists( '-40' ) );
+		assertEquals( null, x.get( '-0' ) );
 		assertEquals( [null].toString(), [ for ( y in x ) y ].toString() );
 	}
 

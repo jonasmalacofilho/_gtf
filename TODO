@@ -1,0 +1,7 @@
+Create tests for:
+- Meta return value behaviour for fields with no meta (Java).
+- haxe.PosInfos from macro reification
+
+Report bugs:
+- Map<Null<String>,A> with null keys (Neko/Java)
+- Dynamic and Math.NaN (Cpp)

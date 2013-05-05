@@ -4,25 +4,25 @@ class TestAssertions extends gtf.Test {
 	@test function _assertEquals() {
 		assertEquals( 10, 10 );
 		assertEquals( 1, 10 );
-		assertEquals( 10, { throw 'An error!'; } );
+		assertEquals( 10, { throw 'An error!'; 0; } );
 	}
 
 	@test function _assertAcceptable() {
 		assertAcceptable( 11, 1, 10 );
 		assertAcceptable( 11, .1, 10 );
-		assertAcceptable( 10, .1, { throw 'An error!'; } );
+		assertAcceptable( 10, .1, { throw 'An error!'; 0; } );
 	}
 
 	@test function _assertTrue() {
 		assertTrue( 10<=20 );
 		assertTrue( 10>=20 );
-		assertTrue( { throw 'An error!'; } );
+		assertTrue( { throw 'An error!'; false; } );
 	}
 
 	@test function _assertFalse() {
 		assertFalse( 10>=20 );
 		assertFalse( 10<=20 );
-		assertFalse( { throw 'An error!'; } );
+		assertFalse( { throw 'An error!'; true; } );
 	}
 
 	@test function _assertThrows() {

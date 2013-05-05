@@ -51,7 +51,7 @@ class Runner {
 			// metadata and fields
 			var meta = haxe.rtti.Meta.getFields( cl );
 			var hasMeta = function ( f, m )
-				return Reflect.hasField( Reflect.field( meta, f ), m );
+				return Reflect.hasField( meta, f ) && Reflect.hasField( Reflect.field( meta, f ), m );
 			var fields = Type.getInstanceFields( cl );
 			fields.sort( Reflect.compare );
 
