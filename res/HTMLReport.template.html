@@ -1,0 +1,68 @@
+<html>
+	<head>
+		<title>::title::</title>
+	</head>
+
+	<body>
+
+		<h1>::title::</h1>
+
+		::if (intro!=null)::
+		<div>::intro::</div>
+		::end::
+
+		::if (assertResults.assertions>0)::
+		<div>
+			<h2>Assertions</h2>
+			<h3>Ran ::(assertResults.assertions):: assertions</h3>
+			<h3>Passed ::(assertResults.passed.length)::</h3>
+			::if (assertResults.passed.length>0)::
+			<table>
+				<tr><td>Expression</td><td>Expected</td><td>File</td><td>Method</td></tr>
+				::foreach (assertResults.passed)::<tr><td>::expr::</td><td>::expected::</td><td>::(pos.fileName)::@::(pos.lineNumber)::</td><td>::(pos.className):: : ::(pos.methodName)::</td></tr>::end::
+			</table>
+			::end::
+			<h3>Failed ::(assertResults.failed.length)::</h3>
+			::if (assertResults.failed.length>0)::
+			<table>
+				<tr><td>Expression</td><td>Expected</td><td>Got</td><td>File</td><td>Method</td></tr>
+				::foreach (assertResults.failed)::<tr><td>::expr::</td><td>::expected::</td><td>::got::</td><td>::(pos.fileName)::@::(pos.lineNumber)::</td><td>::(pos.className):: : ::(pos.methodName)::</td></tr>::end::
+			</table>
+			::end::
+			<h3>::(assertResults.errors.length):: errors</h3>
+			::if (assertResults.errors.length>0)::
+			<table>
+				<tr><td>Expression</td><td>Error</td><td>File</td><td>Method</td></tr>
+				::foreach (assertResults.errors)::<tr><td>::expr::</td><td>::error::</td><td>::(pos.fileName)::@::(pos.lineNumber)::</td><td>::(pos.className):: : ::(pos.methodName)::</td></tr>::end::
+			</table>
+			::end::
+		</div>
+		::end::
+
+		::if (timingResults.tests>0)::
+		<div>
+			<h2>Timing tests</h2>
+			<h3>Ran ::(timingResults.tests):: tests</h3>
+			<h3>Completed ::(timingResults.results.length)::</h3>
+			::if (timingResults.results.length>0)::
+			<table>
+				<tr><td>Expression</td><td>Took [s]</td><td>File</td><td>Method</td></tr>
+				::foreach (timingResults.results)::<tr><td>::expr::</td><td>::seconds::</td><td>::(pos.fileName)::@::(pos.lineNumber)::</td><td>::(pos.className):: : ::(pos.methodName)::</td></tr>::end::
+			</table>
+			::end::
+			<h3>::(timingResults.errors.length):: errors</h3>
+			::if (timingResults.errors.length>0)::
+			<table>
+				<tr><td>Expression</td><td>Error</td><td>File</td><td>Method</td></tr>
+				::foreach (timingResults.errors)::<tr><td>::expr::</td><td>::error::</td><td>::(pos.fileName)::@::(pos.lineNumber)::</td><td>::(pos.className):: : ::(pos.methodName)::</td></tr>::end::
+			</table>
+			::end::
+		</div>
+		::end::
+
+		::if (conclusion!=null)::
+		<div>::conclusion::</div>
+		::end::
+
+	</body>
+</html>

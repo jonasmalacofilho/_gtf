@@ -6,26 +6,29 @@ class SelfTest {
 	}
 
 	function runTests() {
-		var _trace = haxe.Log.trace;
-		haxe.Log.trace = function ( v, ?p ) Sys.println( v );
+		// var _trace = haxe.Log.trace;
+		// haxe.Log.trace = function ( v, ?p ) Sys.println( v );
 
 		var x = new gtf.Runner( tests );
 		var y = x.run();
 
-		trace( 'passed: ' + y.assert.passed );
-		trace( 'Timed: ' + y.timing.results );
+		// trace( 'passed: ' + y.assert.passed );
+		// trace( 'Timed: ' + y.timing.results );
 
-		trace( 'Failed: ' + y.assert.failed );
-		trace( 'ERRORS: ' + y.assert.errors );
-		trace( 'Timing ERRORS: ' + y.timing.errors );
+		// trace( 'Failed: ' + y.assert.failed );
+		// trace( 'ERRORS: ' + y.assert.errors );
+		// trace( 'Timing ERRORS: ' + y.timing.errors );
 
-		trace( '${y.assert.assertions} assertions, passed ${y.assert.passed.length}, failed ${y.assert.failed.length}'
-		+ ' and ${y.assert.errors.length} errors.' );
-		trace( 'EXPECTED 17, 6, 7, 4' );
-		trace( '${y.timing.tests} timing tests, completed ${y.timing.results.length} and ${y.timing.errors.length} errors.' );
-		trace( 'EXPECTED 13, 13, 0' );
+		// trace( '${y.assert.assertions} assertions, passed ${y.assert.passed.length}, failed ${y.assert.failed.length}'
+		// + ' and ${y.assert.errors.length} errors.' );
+		// trace( 'EXPECTED 17, 6, 7, 4' );
+		// trace( '${y.timing.tests} timing tests, completed ${y.timing.results.length} and ${y.timing.errors.length} errors.' );
+		// trace( 'EXPECTED 13, 13, 0' );
 
-		haxe.Log.trace = _trace;
+		// haxe.Log.trace = _trace;
+
+		var hrep = new gtf.HTMLReport( haxe.Resource.getString( 'report' ) );
+		Sys.print( hrep.execute( 'SelfTest report', y, '17 assertions are expected. Of those, 6 should pass, 7 should fail and 4 should generate errors.' ) );
 	}
 
 	static function main() {

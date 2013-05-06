@@ -3,11 +3,13 @@ SELFTEST_SOURCE=selftest
 BASETEST_SOURCE=basetest
 IMPL_SOURCE=impltest
 
-SELFTEST_SOURCE_DEP=$(shell find ${GTF_SOURCE} ${SELFTEST_SOURCE} -name *.hx)
-BASETEST_SOURCE_DEP=$(shell find ${GTF_SOURCE} ${BASETEST_SOURCE} -name *.hx)
-IMPL_SOURCE_DEP=$(shell find ${GTF_SOURCE} ${IMPL_SOURCE} -name *.hx)
+RESOURCE_DIR=res
 
-HX_FLAGS+=
+SELFTEST_SOURCE_DEP=$(shell find ${GTF_SOURCE} ${SELFTEST_SOURCE} -name *.hx -type f) $(shell find ${RESOURCE_DIR}/ -type f)
+BASETEST_SOURCE_DEP=$(shell find ${GTF_SOURCE} ${BASETEST_SOURCE} -name *.hx -type f) $(shell find ${RESOURCE_DIR}/ -type f)
+IMPL_SOURCE_DEP=$(shell find ${GTF_SOURCE} ${IMPL_SOURCE} -name *.hx -type f) $(shell find ${RESOURCE_DIR}/ -type f)
+
+HX_FLAGS+=-resource res/HTMLReport.template.html@report
 HXNEKO_FLAGS+=
 HXCPP_FLAGS+=
 HXJAVA_FLAGS+=
@@ -71,39 +73,39 @@ bin/java/ImplTest/ImplTest.jar: ${IMPL_SOURCE_DEP}
 	mkdir -p bin/java && haxe ${HX_FLAGS} -cp ${GTF_SOURCE} -cp ${IMPL_SOURCE} -main ImplTest -java bin/java/ImplTest ${HXJAVA_FLAGS}
 	
 #running
-SelfTest: cSelfTest out/neko/SelfTest out/cpp/SelfTest out/java/SelfTest
-BaseTest: cBaseTest out/neko/BaseTest out/cpp/BaseTest out/java/BaseTest
-BugsRemaining: cBugsRemaining out/neko/BugsRemaining out/cpp/BugsRemaining out/java/BugsRemaining
-ImplTest: cImplTest out/neko/ImplTest out/cpp/ImplTest out/java/ImplTest
+SelfTest: cSelfTest out/neko/SelfTest.html out/cpp/SelfTest.html out/java/SelfTest.html
+BaseTest: cBaseTest out/neko/BaseTest.html out/cpp/BaseTest.html out/java/BaseTest.html
+BugsRemaining: cBugsRemaining out/neko/BugsRemaining.html out/cpp/BugsRemaining.html out/java/BugsRemaining.html
+ImplTest: cImplTest out/neko/ImplTest.html out/cpp/ImplTest.html out/java/ImplTest.html
 #neko
-neko: cNeko out/neko/SelfTest out/neko/BaseTest out/neko/BugsRemaining out/neko/ImplTest
-out/neko/SelfTest: bin/neko/SelfTest.n
-	mkdir -p out/neko && neko bin/neko/SelfTest.n > out/neko/SelfTest
-out/neko/BaseTest: bin/neko/BaseTest.n
-	mkdir -p out/neko && neko bin/neko/BaseTest.n > out/neko/BaseTest
-out/neko/BugsRemaining: bin/neko/BugsRemaining.n
-	mkdir -p out/neko && neko bin/neko/BugsRemaining.n > out/neko/BugsRemaining
-out/neko/ImplTest: bin/neko/ImplTest.n
-	mkdir -p out/neko && neko bin/neko/ImplTest.n > out/neko/ImplTest
+neko: cNeko out/neko/SelfTest.html out/neko/BaseTest.html out/neko/BugsRemaining.html out/neko/ImplTest.html
+out/neko/SelfTest.html: bin/neko/SelfTest.n
+	mkdir -p out/neko && neko bin/neko/SelfTest.n > out/neko/SelfTest.html
+out/neko/BaseTest.html: bin/neko/BaseTest.n
+	mkdir -p out/neko && neko bin/neko/BaseTest.n > out/neko/BaseTest.html
+out/neko/BugsRemaining.html: bin/neko/BugsRemaining.n
+	mkdir -p out/neko && neko bin/neko/BugsRemaining.n > out/neko/BugsRemaining.html
+out/neko/ImplTest.html: bin/neko/ImplTest.n
+	mkdir -p out/neko && neko bin/neko/ImplTest.n > out/neko/ImplTest.html
 #hxcpp
-cpp: cNeko out/cpp/SelfTest out/cpp/BaseTest out/cpp/BugsRemaining out/cpp/ImplTest
-out/cpp/SelfTest: bin/cpp/SelfTest/SelfTest
-	mkdir -p out/cpp && bin/cpp/SelfTest/SelfTest > out/cpp/SelfTest
-out/cpp/BaseTest: bin/cpp/BaseTest/BaseTest
-	mkdir -p out/cpp && bin/cpp/BaseTest/BaseTest > out/cpp/BaseTest
-out/cpp/BugsRemaining: bin/cpp/BugsRemaining/BugsRemaining
-	mkdir -p out/cpp && bin/cpp/BugsRemaining/BugsRemaining > out/cpp/BugsRemaining
-out/cpp/ImplTest: bin/cpp/ImplTest/ImplTest
-	mkdir -p out/cpp && bin/cpp/ImplTest/ImplTest > out/cpp/ImplTest
+cpp: cNeko out/cpp/SelfTest.html out/cpp/BaseTest.html out/cpp/BugsRemaining.html out/cpp/ImplTest.html
+out/cpp/SelfTest.html: bin/cpp/SelfTest/SelfTest
+	mkdir -p out/cpp && bin/cpp/SelfTest/SelfTest > out/cpp/SelfTest.html
+out/cpp/BaseTest.html: bin/cpp/BaseTest/BaseTest
+	mkdir -p out/cpp && bin/cpp/BaseTest/BaseTest > out/cpp/BaseTest.html
+out/cpp/BugsRemaining.html: bin/cpp/BugsRemaining/BugsRemaining
+	mkdir -p out/cpp && bin/cpp/BugsRemaining/BugsRemaining > out/cpp/BugsRemaining.html
+out/cpp/ImplTest.html: bin/cpp/ImplTest/ImplTest
+	mkdir -p out/cpp && bin/cpp/ImplTest/ImplTest > out/cpp/ImplTest.html
 #java
-java: cJava out/java/SelfTest out/java/BaseTest out/java/BugsRemaining out/java/ImplTest
-out/java/SelfTest: bin/java/SelfTest/SelfTest.jar
-	mkdir -p out/java && java -jar bin/java/SelfTest/SelfTest.jar > out/java/SelfTest
-out/java/BaseTest: bin/java/BaseTest/BaseTest.jar
-	mkdir -p out/java && java -jar bin/java/BaseTest/BaseTest.jar > out/java/BaseTest
-out/java/BugsRemaining: bin/java/BugsRemaining/BugsRemaining.jar
-	mkdir -p out/java && java -jar bin/java/BugsRemaining/BugsRemaining.jar > out/java/BugsRemaining
-out/java/ImplTest: bin/java/ImplTest/ImplTest.jar
-	mkdir -p out/java && java -jar bin/java/ImplTest/ImplTest.jar > out/java/ImplTest
+java: cJava out/java/SelfTest.html out/java/BaseTest.html out/java/BugsRemaining.html out/java/ImplTest.html
+out/java/SelfTest.html: bin/java/SelfTest/SelfTest.jar
+	mkdir -p out/java && java -jar bin/java/SelfTest/SelfTest.jar > out/java/SelfTest.html
+out/java/BaseTest.html: bin/java/BaseTest/BaseTest.jar
+	mkdir -p out/java && java -jar bin/java/BaseTest/BaseTest.jar > out/java/BaseTest.html
+out/java/BugsRemaining.html: bin/java/BugsRemaining/BugsRemaining.jar
+	mkdir -p out/java && java -jar bin/java/BugsRemaining/BugsRemaining.jar > out/java/BugsRemaining.html
+out/java/ImplTest.html: bin/java/ImplTest/ImplTest.jar
+	mkdir -p out/java && java -jar bin/java/ImplTest/ImplTest.jar > out/java/ImplTest.html
 
 .PHONY: all run cleanBin cleanOut cleanNeko cleanCpp cleanJava clean cSelfTest cBaseTest cBugsRemaining cImplTest SelfTest BaseTest BugsRemaining ImplTest cNeko cCpp cJava neko cpp java
